@@ -2,13 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import Auth0ProviderWithHistory from './Components/auth0/Auth0ProviderWithHistory ';
+import ProviderWithHistory from './Components/auth0/Auth0ProviderWithHistory ';
+import { Provider } from 'react-redux';
+import store from './redux/store';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  
-  <Auth0ProviderWithHistory>
-    <App />
-  </Auth0ProviderWithHistory>
-
+  <BrowserRouter >
+    < Provider store={store} >
+      < ProviderWithHistory >
+        <App />
+      </ ProviderWithHistory>
+    </Provider >
+  </BrowserRouter>
 );
