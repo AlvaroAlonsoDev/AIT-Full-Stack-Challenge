@@ -2,6 +2,7 @@ import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 // Stiled
@@ -47,13 +48,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 export const SearchBar = () => {
-
+    const navigate = useNavigate();
     const searchChange = (e) => {
         e.preventDefault()
         //* Hacer un dispatch cuando tenga el redux
-        // if (field.length > 1 && (field.length % 2 !== 0)) {
-        console.log(e.target.search.value);
-        // }
+        const search = e.target.search.value;
+        navigate(`/search/${search}`);
     }
 
     return (

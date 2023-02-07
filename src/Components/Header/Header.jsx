@@ -156,6 +156,10 @@ export const Header = () => {
                     <SearchBar />
                     <Button variant="secondary" size="medium" onClick={() => navigate("/search/trending")}>Trending</Button>
                     <Button variant="secondary" size="medium" onClick={() => navigate("/search/animals")}>Animals</Button>
+                    <Button variant="secondary" size="medium" onClick={() => navigate("/search/sport")}>Sport</Button>
+                    <Button variant="secondary" size="medium" onClick={() => navigate("/search/anime")}>Anime</Button>
+                    <Button variant="secondary" size="medium" onClick={() => navigate("/search/reaction")}>Reaction</Button>
+                    <Button variant="secondary" size="medium" onClick={() => navigate("/search/Gaming")}>Gaming</Button>
 
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }} >
