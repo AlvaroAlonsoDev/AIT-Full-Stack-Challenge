@@ -6,9 +6,8 @@ import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
+import HomeIcon from '@mui/icons-material/Home';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { SearchBar } from '../Search/Seach';
@@ -17,6 +16,9 @@ import LoginButton from '../auth0/LoginButton';
 import Avatar from '../Avatar/Avatar';
 import { useNavigate } from 'react-router-dom';
 import { Button, CircularProgress } from '@mui/material';
+import { ModalNewGif } from '../Modals/ModalNewGif';
+import CategoriesDropdown from '../Dropdown/categoriesDropdown';
+
 
 export const Header = () => {
     const { user, isLoading, logout } = useAuth0();
@@ -26,6 +28,10 @@ export const Header = () => {
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -96,14 +102,6 @@ export const Header = () => {
                 !!user ?
                     <div>
                         <MenuItem>
-                            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                                <Badge badgeContent={4} color="error">
-                                    <MailIcon />
-                                </Badge>
-                            </IconButton>
-                            <p>Messages</p>
-                        </MenuItem>
-                        <MenuItem>
                             <IconButton
                                 size="large"
                                 aria-label="show 17 new notifications"
@@ -129,14 +127,10 @@ export const Header = () => {
                         </MenuItem>
                     </div>
                     : isLoading ? <CircularProgress />
-                    : <LoginButton />
+                        : <LoginButton />
             }
         </Menu>
     );
-
-    const uploadGif = () => {
-        console.log("gola")
-    }
 
 
     return (
@@ -144,34 +138,37 @@ export const Header = () => {
             <AppBar position="static">
                 <Toolbar>
                     <IconButton
+                        onClick={() => navigate("/")}
                         size="large"
                         edge="start"
                         color="inherit"
                         aria-label="open drawer"
                         sx={{ mr: 2 }}
                     >
-                        <MenuIcon />
+                        <HomeIcon />
                     </IconButton>
 
-                    <Button variant="secondary" size="medium" onClick={() => navigate("/")}>GIFS</Button>
+                    <Button variant="secondary" size="medium" onClick={() => navigate("/community")}>Comunity</Button>
 
-                    {/* //* COMPONENT SEARCHBAR */}
+                    {/* //? COMPONENT SEARCHBAR */}
                     <SearchBar />
-                    <Button variant="secondary" size="medium" onClick={() => navigate("/search/trending")}>Trending</Button>
-                    <Button variant="secondary" size="medium" onClick={() => navigate("/search/animals")}>Animals</Button>
-                    <Button variant="secondary" size="medium" onClick={() => navigate("/search/sport")}>Sport</Button>
-                    <Button variant="secondary" size="medium" onClick={() => navigate("/search/anime")}>Anime</Button>
-                    <Button variant="secondary" size="medium" onClick={() => navigate("/search/reaction")}>Reaction</Button>
-                    <Button variant="secondary" size="medium" onClick={() => navigate("/search/Gaming")}>Gaming</Button>
+
+                    {/* //? COMPONENT DROPDOWN */}
+                    <CategoriesDropdown />
+
+                    <Button variant="secondary" size="medium" onClick={() => navigate("/categories")}>Categories</Button>
 
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }} >
                         {
                             !!user ?
                                 <>
-                                    <Button variant="secondary" size="small" onClick={() => uploadGif()}>
+                                    <Button variant="secondary" size="small" onClick={handleOpen}>
                                         Upload Gif
                                     </Button>
+
+                                    <ModalNewGif open={open} handleClose={handleClose} />
+
                                     {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                                         <Badge badgeContent={4} color="error">
                                             <MailIcon />
@@ -200,7 +197,7 @@ export const Header = () => {
                                     </IconButton>
                                 </>
                                 : isLoading ? <CircularProgress color="inherit" />
-                                : <LoginButton />
+                                    : <LoginButton />
                         }
 
                     </Box>

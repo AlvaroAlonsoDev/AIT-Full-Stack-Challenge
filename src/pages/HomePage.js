@@ -22,6 +22,7 @@ export const HomePage = () => {
             {/* {!!isLoading && <Loader />} */}
             {!!isLoading && <SkeletonLoader />}
             <Grid container  spacing={2}>
+                {console.log(trending[0])}
                 {
                     trending && trending.map(e => {
                         return (

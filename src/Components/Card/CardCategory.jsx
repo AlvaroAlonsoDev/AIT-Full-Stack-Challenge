@@ -1,13 +1,11 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
-import LinkIcon from '@mui/icons-material/Link';
-import { Button } from '@mui/material';
-
-import Modal from '@mui/material/Modal';
 import { Link } from 'react-router-dom';
+import { Button, Modal } from '@mui/material';
+import LinkIcon from '@mui/icons-material/Link';
+import { styled } from '@mui/material/styles';
 
 const Image = styled('img')({
     width: '100%',
@@ -24,7 +22,7 @@ const style = {
     p: 4,
 };
 
-export default function Card({ gif }) {
+export const CardCategory = ({ gif, category }) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -37,23 +35,23 @@ export default function Card({ gif }) {
                 <Box sx={{ margin: 1 }}>
                     <Avatar src={!!gif.user ? gif.user.avatar_url : "https://media1.giphy.com/media/3oriO6yTZKmTqUI9tS/200w.gif?cid=6c09b952r24d3e9jsra8krozv1utspvmypbpmhvd1w60uld7&rid=200w.gif&ct=g"} />
                 </Box>
-                <a href={gif.url ? gif.url : ""} target="_blank" rel="noreferrer">
+                <Link to={`/search/${category}`} rel="noreferrer">
                     <Box sx={{ width: '100%' }}>
                         <Typography>{gif.title}</Typography>
                     </Box>
-                </a>
+                </Link>
                 <Box>
                     <Button onClick={handleOpen} variant="text"><LinkIcon /></Button>
                 </Box>
             </Box>
-            <a href={gif.url ? gif.url : ""} target="_blank" rel="noreferrer">
-            <Box>
+            <Link to={`/search/${category}`} rel="noreferrer">
+                <Box>
                     <Image
                         src={gif.images.original.url}
                         alt=""
                     />
                 </Box>
-            </a>
+            </Link>
             <Modal
                 open={open}
                 onClose={handleClose}

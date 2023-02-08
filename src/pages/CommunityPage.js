@@ -5,16 +5,12 @@ import { v4 as uuidv4 } from 'uuid';
 import SkeletonLoader from '../Components/Loader/SkeletonLoader';
 import { Box } from '@mui/system';
 import '@fontsource/roboto/500.css';
-import { useAuth0 } from '@auth0/auth0-react';
 
-
-export const ProfilePage = () => {
-    const { user } = useAuth0();
+export const CommunityPage = () => {
     const isLoading = useSelector(state => state.loading.set);
-    const comunityGifs = useSelector(state => state.gifs.comunity);
-    const ownGifs = comunityGifs.filter(e => e.user.name === user.name)
-    console.log(ownGifs);
-    const title = 'My own Gifs'
+    const OwnGifs = useSelector(state => state.gifs.comunity);
+    console.log(OwnGifs);
+    const title = 'Community Gifs'
     return (
         <>
 
@@ -27,7 +23,7 @@ export const ProfilePage = () => {
             {!!isLoading && <SkeletonLoader />}
             <Grid container spacing={2}>
                 {
-                    ownGifs && ownGifs.map(e => {
+                    OwnGifs && OwnGifs.map(e => {
                         return (
                             <Grid sx={{ mr: 1 }} key={uuidv4()} >
                                 <Card gif={e} />

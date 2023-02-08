@@ -1,7 +1,21 @@
 import { setCategories } from "../redux/features/categorySlice";
-import { setSearch, setTrending } from "../redux/features/gifsSlice";
+import { setComunity, setSearch, setTrending } from "../redux/features/gifsSlice";
 import { setLoading } from "../redux/features/loadingSlice";
 
+
+export const getOwnGif = async (server_url, dispatch) => {
+    try {
+        dispatch(setLoading(true))
+        const res = await fetch(`${server_url}/api/gif/get`);
+        const {data} = await res.json();
+        // Dispatch
+        await dispatch(setComunity(data));
+        await dispatch(setLoading(false));
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 export const getTrending = async (server_url, action, api_key, limit, dispatch) => {
     try {
