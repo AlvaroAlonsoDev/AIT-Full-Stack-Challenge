@@ -3,7 +3,6 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
@@ -17,11 +16,10 @@ import { useAuth0 } from '@auth0/auth0-react';
 import LoginButton from '../auth0/LoginButton';
 import Avatar from '../Avatar/Avatar';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 
 export const Header = () => {
-    const { user } = useAuth0();
-    const { logout } = useAuth0();
+    const { user, isLoading, logout } = useAuth0();
     const navigate = useNavigate();
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -130,10 +128,15 @@ export const Header = () => {
                             <p>Profile</p>
                         </MenuItem>
                     </div>
+                    : isLoading ? <CircularProgress />
                     : <LoginButton />
             }
         </Menu>
     );
+
+    const uploadGif = () => {
+        console.log("gola")
+    }
 
 
     return (
@@ -149,7 +152,7 @@ export const Header = () => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    
+
                     <Button variant="secondary" size="medium" onClick={() => navigate("/")}>GIFS</Button>
 
                     {/* //* COMPONENT SEARCHBAR */}
@@ -166,11 +169,14 @@ export const Header = () => {
                         {
                             !!user ?
                                 <>
-                                    <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                                    <Button variant="secondary" size="small" onClick={() => uploadGif()}>
+                                        Upload Gif
+                                    </Button>
+                                    {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                                         <Badge badgeContent={4} color="error">
                                             <MailIcon />
                                         </Badge>
-                                    </IconButton>
+                                    </IconButton> */}
                                     <IconButton
                                         size="large"
                                         aria-label="show 17 new notifications"
@@ -193,6 +199,7 @@ export const Header = () => {
                                         <Avatar />
                                     </IconButton>
                                 </>
+                                : isLoading ? <CircularProgress color="inherit" />
                                 : <LoginButton />
                         }
 

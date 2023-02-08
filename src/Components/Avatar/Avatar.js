@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
@@ -34,6 +35,8 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 export default function AvatarUser() {
+    const { user } = useAuth0();
+
     return (
         <Stack direction="row" >
             <StyledBadge
@@ -41,7 +44,7 @@ export default function AvatarUser() {
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 variant="dot"
             >
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                <Avatar alt="Remy Sharp" src={user.picture} />
             </StyledBadge>
             
         </Stack>

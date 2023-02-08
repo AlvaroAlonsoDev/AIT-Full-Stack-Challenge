@@ -1,72 +1,71 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
-import Grid from '@mui/material/Grid';
-import Skeleton from '@mui/material/Skeleton';
-import { spacing } from '@mui/system';
+import LinkIcon from '@mui/icons-material/Link';
+import { Button } from '@mui/material';
+
+import Modal from '@mui/material/Modal';
 
 const Image = styled('img')({
     width: '100%',
 });
-
-function SkeletonChildrenDemo(props) {
-    const { loading = false } = props;
-    return (
-        <div>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Box sx={{ margin: 1 }}>
-                    {loading ? (
-                        <Skeleton variant="circular">
-                            <Avatar />
-                        </Skeleton>
-                    ) : (
-                        <Avatar src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg" />
-                    )}
-                </Box>
-                <Box sx={{ width: '100%' }}>
-                    {loading ? (
-                        <Skeleton width="100%">
-                            <Typography>.</Typography>
-                        </Skeleton>
-                    ) : (
-                        <Typography>Ted</Typography>
-                    )}
-                </Box>
-            </Box>
-            {loading ? (
-                <Skeleton variant="rectangular" width="100%">
-                    <div style={{ paddingTop: '57%' }} />
-                </Skeleton>
-            ) : (
-                <Image
-                    src="https://pi.tedcdn.com/r/talkstar-photos.s3.amazonaws.com/uploads/72bda89f-9bbf-4685-910a-2f151c4f3a8a/NicolaSturgeon_2019T-embed.jpg?w=512"
-                    alt=""
-                />
-            )}
-        </div>
-    );
-}
-
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 600,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
 
 export default function Card({ gif }) {
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
+    const copyLink = (text) => {
+        navigator.clipboard.writeText(text);
+    }
     return (
-                <div>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Box sx={{ margin: 1 }}>
-                            <Avatar src={!!gif.user ? gif.user.avatar_url : "https://media1.giphy.com/media/3oriO6yTZKmTqUI9tS/200w.gif?cid=6c09b952r24d3e9jsra8krozv1utspvmypbpmhvd1w60uld7&rid=200w.gif&ct=g"}/>
-                        </Box>
-                        <Box sx={{ width: '100%' }}>
-                            <Typography>{gif.title}</Typography>
-                        </Box>
-                    </Box>
-                    <Image
-                        src={gif.images.original.url}
-                        alt=""
-                    />
-                </div>
+        <Box>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box sx={{ margin: 1 }}>
+                    <Avatar src={!!gif.user ? gif.user.avatar_url : "https://media1.giphy.com/media/3oriO6yTZKmTqUI9tS/200w.gif?cid=6c09b952r24d3e9jsra8krozv1utspvmypbpmhvd1w60uld7&rid=200w.gif&ct=g"} />
+                </Box>
+                <Box sx={{ width: '100%' }}>
+                    <Typography>{gif.title}</Typography>
+                </Box>
+                <Box>
+                    <Button onClick={handleOpen} variant="text"><LinkIcon /></Button>
+                </Box>
+            </Box>
+            <Box>
+                <Image
+                    src={gif.images.original.url}
+                    alt=""
+                />
+            </Box>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Link to {gif.title}
+                    </Typography>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        {gif.images.original.url}
+                    </Typography>
+                    <Button sx={{ mt: 1 }} onClick={() => copyLink(gif.images.original.url)} variant="contained">Copy Link</Button>
+                </Box>
+            </Modal>
+        </Box>
     );
 }

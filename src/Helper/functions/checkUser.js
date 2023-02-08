@@ -7,7 +7,7 @@ export const checkUser = async (token, serverUrl, user) => {
         // dispatch(setUserLogged(fetchGetUser.info[0]));
     // } else {
     //     // SI NO EXISTE, CREAR USER CON POST
-        console.log('El usuario no existe en la bbdd');
+        // console.log('El usuario no existe en la bbdd');
     //     // TENEMOS QUE CREAR ESTE USUARIO
     //     const $user = {
     //         email: user.email,
