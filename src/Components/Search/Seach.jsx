@@ -49,9 +49,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export const SearchBar = () => {
     const navigate = useNavigate();
+
     const searchChange = (e) => {
         e.preventDefault()
-        //* Hacer un dispatch cuando tenga el redux
+
         const search = e.target.search.value;
         navigate(`/search/${search}`);
     }

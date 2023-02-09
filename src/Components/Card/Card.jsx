@@ -7,7 +7,6 @@ import LinkIcon from '@mui/icons-material/Link';
 import { Button } from '@mui/material';
 
 import Modal from '@mui/material/Modal';
-import { Link } from 'react-router-dom';
 
 const Image = styled('img')({
     width: '100%',

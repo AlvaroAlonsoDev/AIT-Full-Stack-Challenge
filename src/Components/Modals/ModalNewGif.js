@@ -52,6 +52,7 @@ export const ModalNewGif = ({ open, handleClose }) => {
             clearTimeout(timer.current);
         };
     }, []);
+    
     const handleButtonClick = () => {
         if (!loading) {
             setSuccess(false);

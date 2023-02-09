@@ -14,7 +14,7 @@ export const CategoriesPage = () => {
     const navigate = useNavigate();
     const isLoading = useSelector(state => state.loading.set);
     const categories = useSelector(state => state.categories.categories);
-
+    console.log(user);
     const title = 'Categories';
     return (
         <>
